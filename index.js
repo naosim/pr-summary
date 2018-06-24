@@ -8,6 +8,17 @@ var escapedString = (v) => {
   return JSON.stringify(v);
 }
 
+var getTag = (v) => {
+  const firstLine = v.trim().split('\n')[0].trim();
+  if(firstLine[0] !== '[') {
+    return '';
+  }
+  if(firstLine.indexOf(']') == -1) {
+    return '';
+  }
+  return firstLine.split(']').slice(0, -1).map(s => s.split('[').join('')).map(v => v.trim()).join('|');
+}
+
 if (require.main === module) {// コマンド実行
   var packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
@@ -83,6 +94,7 @@ if (require.main === module) {// コマンド実行
           comment.updated_at,
           comment.user,
           comment.html_url,
+          getTag(comment.body),
           escapedString(comment.body)
         ].join(','));
       } else {
@@ -104,13 +116,14 @@ if (require.main === module) {// コマンド実行
           pr.updated_at,
           pr.user,
           '',
+          getTag(pr.title),
           escapedString(pr.title)
         ].join(','));
       }
       
     }
     
-    console.log('header,id,number,state,pullsState,created_at,updated_at,closed_at,merged_at,user,title_escaped,separator,id,create_at,update_at,user,html_url,body_escaped');
+    console.log('header,id,number,state,pullsState,created_at,updated_at,closed_at,merged_at,user,title_escaped,separator,id,create_at,update_at,user,html_url,tags,body_escaped');
     main(
       program.accessToken,
       program.owner, 
