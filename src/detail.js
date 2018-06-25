@@ -9,15 +9,15 @@ class Comment {
     id,
     user,
     body,
-    create_at,
-    update_at,
+    created_at,
+    updated_at,
     html_url
   ) {
     this.id = id;
     this.user = user
     this.body = body
-    this.create_at = create_at
-    this.update_at = update_at
+    this.created_at = created_at
+    this.updated_at = updated_at
     this.html_url = html_url
   }
 }
