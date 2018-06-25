@@ -5,6 +5,7 @@
 ```
 npm -g pr-summary
 ```
+※ まだnpmに登録してないので使えません。。
 
 ## getting started
 ### simple
