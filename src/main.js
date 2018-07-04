@@ -7,6 +7,8 @@ function toBase64(str) {
   return new Buffer(str).toString('base64');
 }
 
+var allList = []
+
 function main(accessToken, owner, repo, option, forEach, end) {
   var repository = new Repository(owner, repo);
   var minNumber = option.minNumber || parseInt(option.minNumber);
@@ -41,12 +43,13 @@ function main(accessToken, owner, repo, option, forEach, end) {
   
       if(forEach) {
         list.forEach(forEach);
+        list.forEach(v => allList.push(v))
       }
   
       if(minNumber && list.length > 0 && list[list.length - 1].number > minNumber) {
         run(page + 1, forEach, end);
       } else if(end){
-        end(list);
+        end(allList);
       }
       
     });  
